@@ -1,6 +1,19 @@
 
 
-class Quiz:
+class quiz:
+    def __init__(self,question,options,answer):
+        self.question=question
+        self.options=options
+        self.answer=answer
+        
+    def to_dict(self):
+        return {
+            "question": self.question,
+            "options": self.options,
+            "answer": self.answer
+        }
+
+class QuizGame:
     def __init__(self,file_name=None):
         
         if not file_name:
@@ -13,9 +26,37 @@ class Quiz:
                 ]
         else: self.quizzes=[]
 
+    def get_valid_value(self,prompt,is_numeric=False):
+        while True:
+            user_input=input(prompt).strip()
+            if not user_input:
+                print("입력값이 비었습니다. 다시 입력해주세요")
+                continue
+            if is_numeric:
+                try:
+                    user_input=int(user_input)
+                    
+                    if 1<=user_input<=4:
+                        return user_input
+                    else: print("숫자를 1부터 4사이로 입력해주세요.")
+                except ValueError:
+                    print("숫자만 입력이 가능합니다. 다시 입력해주세요.")
+            else:
+                return user_input
     
-    def add_quiz(self,question,options,answer):
+    def add_quiz(self):
         
+        print('새 퀴즈를 입력해주세요')
+        #질문
+        question=self.get_valid_value('질문을 입력해주세요')
+        
+        #옵션
+        options=[]
+        for i in range(1,5):
+            opt=self.get_valid_value(f'{i}번째 보기를 입력해주세요')
+            options.append(opt)
+        #정답
+        answer=self.get_valid_value('정답을 입력해주세요 (숫자 1~4)',True)
         
     
     def run(self):
