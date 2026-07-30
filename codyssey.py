@@ -17,8 +17,8 @@ class quiz:
 
 class QuizGame:
     def __init__(self,file_name=None):
-        self.filename=self.filename
-        self.quizzes=[]
+        self.filename=file_name
+        self.quizzes=self.load_data()
         self.high_score=0
         
         
@@ -113,7 +113,7 @@ class QuizGame:
         for q in self.quizzes:
             print(f'\nQ:{q.question}')
             for i,opt in enumerate(q.options):
-                print(f'{i} {opt}')
+                print(f'{i+1} {opt}')
             try:
                 user_ans=self.get_valid_value('정답을 입력해주세요',True)
                 if user_ans==q.answer:
@@ -138,7 +138,7 @@ class QuizGame:
         
         print('\n---퀴즈 목록---')
         for i,q in enumerate(self.quizzes):
-            print(f'{i+1}.{q.question})')
+            print(f'{i+1}.{q.question}')
             
             
     def show_score(self):
@@ -183,4 +183,6 @@ class QuizGame:
 
             
             
-            
+if __name__ == '__main__':
+    game=QuizGame('state.json')
+    game.run()
