@@ -48,23 +48,43 @@ class QuizGame:
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
             
-    def get_valid_value(self,prompt,is_numeric=False,): #완료
-        while True:
-            user_input=input(prompt).strip()
-            if not user_input:
-                print("입력값이 비었습니다. 다시 입력해주세요")
-                continue
-            if is_numeric:
-                try:
-                    user_input=int(user_input)
+    def get_valid_value(self,prompt,is_numeric=False,menu=True): #완료
+        
+        if not menu:
+            while True:
+                user_input=input(prompt).strip()
+                if not user_input:
+                    print("입력값이 비었습니다. 다시 입력해주세요")
+                    continue
+                if is_numeric:
+                    try:
+                        user_input=int(user_input)
+                        
+                        if 1<=user_input<=4:
+                            return user_input
+                        else: print("숫자를 1부터 4사이로 입력해주세요.")
+                    except ValueError:
+                        print("숫자만 입력이 가능합니다. 다시 입력해주세요.")
+                else:
+                    return user_input
+        else:
+            while True:
+                user_input=input(prompt).strip()
+                if not user_input:
+                    print("입력값이 비었습니다. 다시 입력해주세요")
+                    continue
+                if is_numeric:
+                    try:
+                        user_input=int(user_input)
+                        
+                        if 1<=user_input<=5:
+                            return user_input
+                        else: print("숫자를 1부터 5사이로 입력해주세요.")
+                    except ValueError:
+                        print("숫자만 입력이 가능합니다. 다시 입력해주세요.")
+                else:
+                    return user_input
                     
-                    if 1<=user_input<=4:
-                        return user_input
-                    else: print("숫자를 1부터 4사이로 입력해주세요.")
-                except ValueError:
-                    print("숫자만 입력이 가능합니다. 다시 입력해주세요.")
-            else:
-                return user_input
     
     def add_quiz(self): # 완료
         
@@ -139,15 +159,24 @@ class QuizGame:
             print("메뉴를 선택해 주세요")
             print("1. 퀴즈 풀기")
             print("2. 퀴즈 추가하기")
-            print("3. 종료")
+            print("3. 퀴즈 목록 보기")
+            print("4. 최고 점수 보기")
+            print("5. 종료")
+
+        
                     
             user_select=self.get_valid_value('숫자를 입력해 주세요:',True)
             
             if user_select==1:
                 self.start_quiz()
             elif user_select==2:
-                pass
+                self.add_quiz()
             elif user_select==3:
+                self.show_quiz()
+            elif user_select==4:
+                self.show_score()
+            elif user_select==5:
+                print('프로그램을 종료합니다.')
                 break
             else:
                 print("다시 입력해 주세요")
