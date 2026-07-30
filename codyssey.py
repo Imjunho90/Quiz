@@ -122,7 +122,13 @@ class QuizGame:
             
             
     def show_score(self):
-        print(f'\n현재 최고 점수: {self.high_score}점')
+        print('---최고 점수---')
+        
+        if self.high_score>0:
+            print(f'현재 최고 점수: {self.high_score}점')
+        else:
+            print('아직 플레이 기록이 없습니다.')
+            print('퀴즈를 풀어보세요.')
         
     def run(self):
         
