@@ -16,10 +16,12 @@ class quiz:
         }
 
 class QuizGame:
-    def __init__(self,file_name=None):
+    def __init__(self,file_name='state.json'):
         self.filename=file_name
-        self.quizzes=self.load_data()
+        self.quizzes=[]
         self.high_score=0
+        self.load_data()
+
         
         
         
@@ -48,7 +50,7 @@ class QuizGame:
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
             
-    def get_valid_value(self,prompt,is_numeric=False,menu=True): #완료
+    def get_valid_value(self,prompt,is_numeric=False,menu=False): #완료
         
         if not menu:
             while True:
@@ -56,6 +58,9 @@ class QuizGame:
                 if not user_input:
                     print("입력값이 비었습니다. 다시 입력해주세요")
                     continue
+                
+                
+                # 정답 선택 or 문제
                 if is_numeric:
                     try:
                         user_input=int(user_input)
@@ -82,8 +87,7 @@ class QuizGame:
                         else: print("숫자를 1부터 5사이로 입력해주세요.")
                     except ValueError:
                         print("숫자만 입력이 가능합니다. 다시 입력해주세요.")
-                else:
-                    return user_input
+
                     
     
     def add_quiz(self): # 완료
@@ -165,7 +169,7 @@ class QuizGame:
 
         
                     
-            user_select=self.get_valid_value('숫자를 입력해 주세요:',True)
+            user_select=self.get_valid_value('숫자를 입력해 주세요:',True,True)
             
             if user_select==1:
                 self.start_quiz()
