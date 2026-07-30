@@ -45,3 +45,61 @@ python codyssey.py
 - `Ctrl+C` 또는 입력 스트림 종료 발생 시
   안내 메시지를 출력하고 현재 상태를 저장한 뒤 안전하게 종료합니다.
 - `state.json`이 없거나 손상된 경우 안내 후 기본 퀴즈 데이터로 복구합니다.
+
+
+### 클래스 구조
+
+- `Quiz' — 개별 퀴즈 한 문제를 표현
+  - 속성: question, choices, answer
+  - 메서드: show_quiz(), is_correct(), to_dict()
+
+- QuizGame — 게임 전체 관리
+  - 속성: quizzes, high_score, filename
+  - 메서드: run(), start_quiz(), add_quiz()
+    show_list(), show_score(),
+    load_data() / save_data() default_data(),
+    get_valid_value()
+
+
+## 데이터 파일 설명 (`state.json`)
+
+프로젝트 루트에 UTF-8 인코딩으로 저장됩니다.
+
+```json
+{
+    "high_score": 50,
+    "quizzes": [
+        {
+            "question": "파이썬에서 리스트에 요소를 추가하는 함수는?",
+            "choices": ["add()", "append()", "insert()", "push()"],
+            "answer": 2
+        }
+    ]
+}
+```
+
+
+| 키 | 타입 | 설명 |
+|---|---|---|
+| `high_score` | int | 최고 점수 (정답 1개당 10점) |
+| `quizzes` | list | 퀴즈 객체 목록 |
+| `quizzes[].question` | str | 문제 |
+| `quizzes[].choices` | list[str] | 보기 4개 |
+| `quizzes[].answer` | int | 정답 번호 (1~4) |
+
+
+
+
+저장 시점
+
+- 첫 실행으로 기본 데이터를 생성했을 때
+- 새 퀴즈를 추가했을 때
+- 최고 점수를 갱신했을 때
+- `Ctrl+C` 등으로 중단되었을 때
+
+
+
+복구 동작
+
+파일이 없으면 기본 퀴즈 5문제를 생성하고, JSON 형식이 깨졌거나
+퀴즈 목록이 비어 있으면 안내 메시지 출력 후 기본 데이터로 초기화합니다.
