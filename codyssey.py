@@ -33,7 +33,7 @@ class QuizGame:
                 ]
         else: self.quizzes=[]
         
-    def load_data(self):
+    def load_data(self): #완료
         if os.path.exists(self.filename):
             with open(self.filename,'r',encoding='utf-8') as f:
                 data=json.load(f)
@@ -49,7 +49,7 @@ class QuizGame:
                             ]
             self.quizzes=[quiz(**q) for q in initial_data]
             self.save_data()
-    def save_data(self):
+    def save_data(self): #완료
         
         data={
             'high_score':self.high_score,
@@ -58,7 +58,7 @@ class QuizGame:
         with open(self.filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
             
-    def get_valid_value(self,prompt,is_numeric=False,):
+    def get_valid_value(self,prompt,is_numeric=False,): #완료
         while True:
             user_input=input(prompt).strip()
             if not user_input:
@@ -76,7 +76,7 @@ class QuizGame:
             else:
                 return user_input
     
-    def add_quiz(self):
+    def add_quiz(self): # 완료
         
         print('새 퀴즈를 입력해주세요')
         #질문
@@ -93,6 +93,35 @@ class QuizGame:
         self.quizzes.append(quiz(question,options,answer))
         self.save_data()
     
+    def start_quiz(self):
+        if not self.quizzes:
+            print('등록된 퀴즈가 없습니다.')
+            return
+        score=0
+        
+        print('---퀴즈 게임 시작---')
+        for q in self.quizzes:
+            print(f'\nQ:{q.question}')
+            for i,opt in enumerate(q.options):
+                print(f'{i} {opt}')
+            try:
+                user_ans=self.get_valid_value('정답을 입력해주세요',True)
+                if user_ans==q.answer:
+                    print('정답입니다! +10점')
+                    score+=10
+                else:
+                    print(f'틀렸습니다. 정답은 {q.answer}번입니다.')
+                    
+            except ValueError:
+                print("숫자를 입력해야 합니다. 오답 처리됩니다.")
+        
+        print(f'\n게임 종료! 당신의 점수: {score}')
+        if score>self.high_score:
+            print(f'축하합니다! 최고 점수 경신! ({self.high_score} -> {score})')
+            self.high_score=score
+            self.save_data()
+                  
+        
     def run(self):
         
         
@@ -107,7 +136,7 @@ class QuizGame:
             user_select=self.get_valid_value('숫자를 입력해 주세요:',True)
             
             if user_select==1:
-                pass
+                self.start_quiz()
             elif user_select==2:
                 pass
             elif user_select==3:
