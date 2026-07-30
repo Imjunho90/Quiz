@@ -23,16 +23,6 @@ class QuizGame:
         
         
         
-        if not file_name:
-            self.quizzes=[
-                    {"question": "파이썬에서 리스트에 요소를 추가하는 함수는?", "options": ["add()", "append()", "insert()", "push()"], "answer": 2},
-                    {"question": "파이썬의 창시자는?", "options": ["Guido van Rossum", "Elon Musk", "Bill Gates", "James Gosling"], "answer": 1},
-                    {"question": "다음 중 불변(Immutable) 자료형은?", "options": ["list", "dict", "set", "tuple"], "answer": 4},
-                    {"question": "출력 함수는?", "options": ["input()", "print()", "write()", "echo()"], "answer": 2},
-                    {"question": "논리 연산자 중 '그리고'를 뜻하는 것은?", "options": ["or", "not", "and", "xor"], "answer": 3}
-                ]
-        else: self.quizzes=[]
-        
     def load_data(self): #완료
         if os.path.exists(self.filename):
             with open(self.filename,'r',encoding='utf-8') as f:
@@ -120,7 +110,19 @@ class QuizGame:
             print(f'축하합니다! 최고 점수 경신! ({self.high_score} -> {score})')
             self.high_score=score
             self.save_data()
-                  
+    def show_quiz(self):
+        
+        if not self.quizzes:
+            print('등록된 퀴즈가 없습니다.')
+            return
+        
+        print('\n---퀴즈 목록---')
+        for i,q in enumerate(self.quizzes):
+            print(f'{i+1}.{q.question})')
+            
+            
+    def show_score(self):
+        print(f'\n현재 최고 점수: {self.high_score}점')
         
     def run(self):
         
