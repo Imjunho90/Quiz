@@ -49,7 +49,7 @@ python codyssey.py
 
 ### 클래스 구조
 
-- `Quiz' — 개별 퀴즈 한 문제를 표현
+- Quiz — 개별 퀴즈 한 문제를 표현
   - 속성: question, choices, answer
   - 메서드: show_quiz(), is_correct(), to_dict()
 
