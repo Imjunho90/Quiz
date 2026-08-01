@@ -1,12 +1,16 @@
 
 import os
 import json
+import random
+from datetime import datetime
+
 
 class Quiz:
-    def __init__(self,question,choices,answer):
+    def __init__(self,question,choices,answer,hint=''):
         self.question=question
         self.choices=choices
         self.answer=answer
+        self.hint=hint
         
     def show_quiz(self):
         print(f'{self.question}')
@@ -22,7 +26,21 @@ class Quiz:
         return {
             "question": self.question,
             "choices": self.choices,
-            "answer": self.answer
+            "answer": self.answer,
+            'hint': self.hint
+        }
+        
+class GameRecord:
+    def __init__(self,date,total,score):
+        self.date=date
+        self.total=total
+        self.score=score
+        
+    def to_dict(self):
+        return {
+            "date": self.date,
+            "total": self.total,
+            "score": self.score
         }
 
 class QuizGame:
@@ -31,6 +49,8 @@ class QuizGame:
         self.quizzes=[]
         self.high_score=0
         self.load_data()
+        self.history=[]
+        self.load_history()
 
         
         
@@ -40,9 +60,19 @@ class QuizGame:
                         {"question": "파이썬의 창시자는?", "choices": ["Guido van Rossum", "Elon Musk", "Bill Gates", "James Gosling"], "answer": 1},
                         {"question": "다음 중 불변(Immutable) 자료형은?", "choices": ["list", "dict", "set", "tuple"], "answer": 4},
                         {"question": "출력 함수는?", "choices": ["input()", "print()", "write()", "echo()"], "answer": 2},
-                        {"question": "논리 연산자 중 '그리고'를 뜻하는 것은?", "choices": ["or", "not", "and", "xor"], "answer": 3}
+                        {"question": "논리 연산자 중 '그리고'를 뜻하는 것은?", "choices": ["or", "not", "and", "xor"], "answer": 3},
+                        {"question": "문자열의 길이를 구하는 함수는?", "choices": ["size()", "len()", "count()", "length()"], "answer": 2},
+                        {"question": "파이썬에서 주석을 작성할 때 쓰는 기호는?", "choices": ["//", "#", "/* */", "--"], "answer": 2},
+                        {"question": "다음 중 반복문 키워드가 아닌 것은?", "choices": ["for", "while", "loop", "break"], "answer": 3},
+                        {"question": "리스트의 마지막 요소를 꺼내면서 제거하는 메서드는?", "choices": ["pop()", "remove()", "del()", "cut()"], "answer": 1},
+                        {"question": "정수형으로 변환하는 함수는?", "choices": ["str()", "float()", "int()", "bool()"], "answer": 3},
+                        {"question": "다음 중 딕셔너리를 생성하는 올바른 표현은?", "choices": ["[1, 2, 3]", "(1, 2, 3)", "{1, 2, 3}", "{'a': 1}"], "answer": 4},
+                        {"question": "함수를 정의할 때 사용하는 키워드는?", "choices": ["func", "def", "function", "define"], "answer": 2},
+                        {"question": "7 // 2 의 결과값은?", "choices": ["3.5", "3", "4", "1"], "answer": 2},
+                        {"question": "예외 처리를 위해 사용하는 키워드 조합은?", "choices": ["try - except", "do - catch", "if - else", "begin - rescue"], "answer": 1},
+                        {"question": "range(5)가 생성하는 숫자의 범위는?", "choices": ["1~5", "0~5", "0~4", "1~4"], "answer": 3},
+                        
                     ]
-        
         self.quizzes=[Quiz(**q) for q in initial_data]
         self.high_score=0
         self.save_data()
@@ -117,31 +147,62 @@ class QuizGame:
             choices.append(opt)
         #정답
         answer=self.get_valid_value('정답을 입력해주세요 (숫자 1~4)',True)
-        
-        self.quizzes.append(Quiz(question,choices,answer))
+        hint=self.get_valid_value('힌트를 입력해주세요(없으면 Enter): ')
+        self.quizzes.append(Quiz(question,choices,answer,hint))
         self.save_data()
     
     def start_quiz(self):
         if not self.quizzes:
             print('등록된 퀴즈가 없습니다.')
             return
+        
+        
+        total=len(self.quizzes)
+        
+        count=self.get_valid_value(f"몇 문제를 푸시겠습니까?(최대 {total}개)",True,1,total)
+        
+        quiz_list = random.sample(self.quizzes, count)
+    
         score=0
         correct=0
         print('---퀴즈 게임 시작---')
-        for q in self.quizzes:
+        for q in quiz_list:
             q.show_quiz()
             
+            use_hint=False
+            if q.hint:
+                choice=input("힌트를 보시겠습니까? (y/n):")
+                if choice.lower()=='y':
+                    print(f'힌트: {q.hint}')
+                    use_hint=True
             
             user_ans=self.get_valid_value('정답을 입력해주세요',True)
             if q.is_correct(user_ans): 
-                print('정답입니다! +10점')
-                score+=10
+                
+                if use_hint:
+                    gain=5
+                    print(f'정답입니다! +{gain}점')
+                else:
+                    gain=10
+                    print(f'정답입니다! +{gain}점')
+    
+                score+=gain
                 correct+=1
             else:
-                print(f'틀렸습니다. 정답은 {q.answer}번입니다.')
+                if use_hint:
+                    loss=-5
+                    score+=loss
+                    print(f'틀렸습니다. 정답은 {q.answer}번입니다. -5점')
+                else:
+                    print(f'틀렸습니다. 정답은 {q.answer}번입니다.')
                         
         print(f'\n게임 종료! {correct}/{len(self.quizzes)}문제 정답, 점수: {score}')
         
+        now=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        record=GameRecord(now,len(quiz_list),score)
+        
+        self.history.append(record)
+        self.save_history()
         
         if score>self.high_score:
             print(f'축하합니다! 최고 점수 경신! ({self.high_score} -> {score})')
@@ -166,7 +227,32 @@ class QuizGame:
         else:
             print('아직 플레이 기록이 없습니다.')
             print('퀴즈를 풀어보세요.')
+            
+        for i, r in enumerate(self.history):
+            print(f'{i+1}. [{r.date}] {r.total}문제 중 {r.score}점')
+            
+        best=max(self.history,key=lambda x:x.score)
+        print(f'최고 점수 기록: [{best.date}] {best.total}문제 중 {best.score}점')
         
+    def save_history(self):
+        data=[r.to_dict() for r in self.history]
+        with open('history.json','w',encoding='utf-8') as f:
+            json.dump(data,f,ensure_ascii=False,indent=2)
+            
+            
+            
+    def load_history(self):
+        self.history=[]
+        
+        if not os.path.exists('history.json'):
+            return
+        with open('history.json','r',encoding='utf-8') as f:
+            data=json.load(f)
+            
+        for d in data:
+            record=GameRecord(**d)
+            self.history.append(record)
+            
     def run(self):
         while True:
             print("메뉴를 선택해 주세요")
@@ -174,9 +260,10 @@ class QuizGame:
             print("2. 퀴즈 추가하기")
             print("3. 퀴즈 목록 보기")
             print("4. 최고 점수 보기")
-            print("5. 종료")
+            print("5. 퀴즈 삭제하기")
+            print("6. 프로그램 종료")
 
-            user_select=self.get_valid_value('숫자를 입력해 주세요:',True,1,5)
+            user_select=self.get_valid_value('숫자를 입력해 주세요:',True,1,7)
             
             if user_select==1:
                 self.start_quiz()
@@ -187,10 +274,24 @@ class QuizGame:
             elif user_select==4:
                 self.show_score()
             elif user_select==5:
+                self.delete_quiz()
+            elif user_select==6:
                 print('프로그램을 종료합니다.')
                 break
 
-            
+    def delete_quiz(self):
+        if not self.quizzes:
+            print('등록된 퀴즈가 없습니다.')
+            return
+        
+        print('---등록된 퀴즈 목록---')
+        for i,q in enumerate(self.quizzes):
+            print(f'{i+1}. {q.question}')
+        
+        num=self.get_valid_value('삭제할 퀴즈 번호를 입력해주세요',True,1,len(self.quizzes))
+        removed=self.quizzes.pop(num-1)
+        self.save_data()
+        print(f'{removed.question} 퀴즈가 삭제되었습니다.')
             
 if __name__ == '__main__':
     game=QuizGame('state.json')

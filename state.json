@@ -1,0 +1,60 @@
+{
+    "high_score": 50,
+    "quizzes": [
+        {
+            "question": "파이썬에서 리스트에 요소를 추가하는 함수는?",
+            "choices": [
+                "add()",
+                "append()",
+                "insert()",
+                "push()"
+            ],
+            "answer": 2,
+            "hint": ""
+        },
+        {
+            "question": "파이썬의 창시자는?",
+            "choices": [
+                "Guido van Rossum",
+                "Elon Musk",
+                "Bill Gates",
+                "James Gosling"
+            ],
+            "answer": 1,
+            "hint": ""
+        },
+        {
+            "question": "다음 중 불변(Immutable) 자료형은?",
+            "choices": [
+                "list",
+                "dict",
+                "set",
+                "tuple"
+            ],
+            "answer": 4,
+            "hint": ""
+        },
+        {
+            "question": "출력 함수는?",
+            "choices": [
+                "input()",
+                "print()",
+                "write()",
+                "echo()"
+            ],
+            "answer": 2,
+            "hint": ""
+        },
+        {
+            "question": "논리 연산자 중 '그리고'를 뜻하는 것은?",
+            "choices": [
+                "or",
+                "not",
+                "and",
+                "xor"
+            ],
+            "answer": 3,
+            "hint": ""
+        }
+    ]
+}
