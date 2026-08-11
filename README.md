@@ -273,4 +273,4 @@ Quiz 클래스가 아닌 보너스 문제 5개를 만들고 main으로 병합하
 
 그 후 다른 로컬에서 README.md 수정 후 현재 로컬에서 git pull을 하여 변경사항을 가져왔습니다.
 ![pull](img/git_pull.png)
-
+ss
