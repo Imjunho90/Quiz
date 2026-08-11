@@ -256,10 +256,10 @@ git
 
 ## 9. git log
 
+![git_log1](img/merge.png)
+![git_log2](img/git_log.png)
 
-![git_log](img/git_log.png)
 
-Quiz 클래스가 아닌 보너스 문제 5개를 만들고 main으로 병합하였습니다.
 
 ## 10. 개발 환경
 
