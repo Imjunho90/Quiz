@@ -253,3 +253,24 @@ state.json 데이터가 손상됬을 경우에도 프로그램이 비정상적�
 ![restart](img/restart.png)
 
 git
+
+## 9. git log
+
+
+![git_log](img/git_log.png)
+
+Quiz 클래스가 아닌 보너스 문제 5개를 만들고 main으로 병합하였습니다.
+
+## 10. 개발 환경
+
+![개발 환경](img/development_environment.png)
+
+
+## 11. clone과 pull 실습
+
+프로그램 완성후 레포지토리를 복제하였습니다.
+![clone](img/git_clone.png)
+
+그 후 다른 로컬에서 README.md 수정 후 현재 로컬에서 git pull을 하여 변경사항을 가져왔습니다.
+![pull](img/git_pull.png)
+
