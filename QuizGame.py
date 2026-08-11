@@ -18,22 +18,19 @@ class QuizGame:
         
     def default_data(self):
         initial_data=[
-                        {"question": "파이썬에서 리스트에 요소를 추가하는 함수는?", "choices": ["add()", "append()", "insert()", "push()"], "answer": 2},
-                        {"question": "파이썬의 창시자는?", "choices": ["Guido van Rossum", "Elon Musk", "Bill Gates", "James Gosling"], "answer": 1},
-                        {"question": "다음 중 불변(Immutable) 자료형은?", "choices": ["list", "dict", "set", "tuple"], "answer": 4},
+                        {"question": "파이썬에서 리스트에 요소를 추가하는 함수는?", "choices": ["add()", "append()", "insert()", "push()"], "answer": 2, "hint": "리스트의 끝에 요소를 추가할 때 사용합니다."},
+                        {"question": "파이썬의 창시자는?", "choices": ["Guido van Rossum", "Elon Musk", "Bill Gates", "James Gosling"], "answer": 1, "hint": "네덜란드 출신 프로그래머입니다."},
+                        {"question": "다음 중 불변(Immutable) 자료형은?", "choices": ["list", "dict", "set", "tuple"], "answer": 4, "hint": "변경할 수 없는 자료형입니다."},
                         {"question": "출력 함수는?", "choices": ["input()", "print()", "write()", "echo()"], "answer": 2},
-                        {"question": "논리 연산자 중 '그리고'를 뜻하는 것은?", "choices": ["or", "not", "and", "xor"], "answer": 3},
+                        {"question": "논리 연산자 중 '그리고'를 뜻하는 것은?", "choices": ["or", "not", "and", "xor"], "answer": 3, "hint": "'and'는 두 조건 모두가 참일 때 참을 반환합니다."},
                         {"question": "문자열의 길이를 구하는 함수는?", "choices": ["size()", "len()", "count()", "length()"], "answer": 2},
-                        {"question": "파이썬에서 주석을 작성할 때 쓰는 기호는?", "choices": ["//", "#", "/* */", "--"], "answer": 2},
-                        {"question": "다음 중 반복문 키워드가 아닌 것은?", "choices": ["for", "while", "loop", "break"], "answer": 3},
-                        {"question": "리스트의 마지막 요소를 꺼내면서 제거하는 메서드는?", "choices": ["pop()", "remove()", "del()", "cut()"], "answer": 1},
+                        {"question": "파이썬에서 주석을 작성할 때 쓰는 기호는?", "choices": ["//", "#", "/* */", "--"], "answer": 2, "hint": "주석을 작성할 때 사용합니다."},
+                        {"question": "다음 중 반복문 키워드가 아닌 것은?", "choices": ["for", "while", "loop", "break"], "answer": 3, "hint": "반복문 키워드는 'for'와 'while'입니다."},
+                        {"question": "리스트의 마지막 요소를 꺼내면서 제거하는 메서드는?", "choices": ["pop()", "remove()", "del()", "cut()"], "answer": 1, "hint": "리스트의 마지막 요소를 꺼내면서 제거합니다."},
                         {"question": "정수형으로 변환하는 함수는?", "choices": ["str()", "float()", "int()", "bool()"], "answer": 3},
-                        {"question": "다음 중 딕셔너리를 생성하는 올바른 표현은?", "choices": ["[1, 2, 3]", "(1, 2, 3)", "{1, 2, 3}", "{'a': 1}"], "answer": 4},
-                        {"question": "함수를 정의할 때 사용하는 키워드는?", "choices": ["func", "def", "function", "define"], "answer": 2},
-                        {"question": "7 // 2 의 결과값은?", "choices": ["3.5", "3", "4", "1"], "answer": 2},
-                        {"question": "예외 처리를 위해 사용하는 키워드 조합은?", "choices": ["try - except", "do - catch", "if - else", "begin - rescue"], "answer": 1},
-                        {"question": "range(5)가 생성하는 숫자의 범위는?", "choices": ["1~5", "0~5", "0~4", "1~4"], "answer": 3},
-                        
+                        {"question": "다음 중 딕셔너리를 생성하는 올바른 표현은?", "choices": ["[1, 2, 3]", "(1, 2, 3)", "{1, 2, 3}", "{'a': 1}"], "answer": 4, "hint": "딕셔너리는 중괄호를 사용하여 생성합니다."},
+                        {"question": "함수를 정의할 때 사용하는 키워드는?", "choices": ["func", "def", "function", "define"],"answer": 2, "hint": "'def' 키워드를 사용하여 함수를 정의합니다."},
+                        {"question": "파이썬에서 모듈을 가져올 때 사용하는 키워드는?", "choices": ["import", "include", "require", "load"], "answer": 1, "hint": "'import' 키워드를 사용하여 모듈을 가져옵니다."},
                     ]
         self.quizzes=[Quiz(**q) for q in initial_data]
         self.high_score=0
@@ -78,7 +75,7 @@ class QuizGame:
         while True:
             user_input=input(prompt).strip()
             if not user_input:
-                print("입력값이 비었습니다. 다시 입력해주세요: ")
+                print("❗️입력값이 비었습니다. 다시 입력해주세요: ")
                 continue
                 
                 
@@ -89,37 +86,38 @@ class QuizGame:
                         
                     if minv<=user_input<=maxv:
                         return user_input
-                    else: print(f"숫자를 {minv}부터 {maxv}사이로 입력해주세요.")
+                    else: print(f"❗️숫자를 {minv}부터 {maxv}사이로 입력해주세요.")
                 except ValueError:
-                    print("숫자만 입력이 가능합니다. 다시 입력해주세요.")
+                    print("❗️숫자만 입력이 가능합니다. 다시 입력해주세요.")
             else:
                 return user_input
                     
     
     def add_quiz(self): # 완료
         
-        print('새 퀴즈를 입력해주세요')
+        print('\n새 퀴즈를 입력해주세요')
         #질문
-        question=self.get_valid_value('질문을 입력해주세요:')
+        question=self.get_valid_value('\n질문을 입력해주세요:')
         
         #옵션
         choices=[]
         for i in range(1,5):
-            opt=self.get_valid_value(f'{i}번째 보기를 입력해주세요')
+            opt=self.get_valid_value(f'{i}번째 보기를 입력해주세요:')
             choices.append(opt)
         #정답
-        answer=self.get_valid_value('정답을 입력해주세요 (숫자 1~4):',True)
+        answer=self.get_valid_value('\n정답을 입력해주세요 (숫자 1~4):',True)
 
         while True:
-            hint=self.get_valid_value('힌트를 입력하시겠습니까?(y/n):')
+            hint=self.get_valid_value('\n힌트를 입력하시겠습니까?(y/n):')
             if hint.lower()== 'y':
-                hint_input=self.get_valid_value('힌트를 입력해주세요:') 
+                hint_input=self.get_valid_value('\n힌트를 입력해주세요:') 
             elif hint.lower()=='n':
                 hint_input=''
             else:
-                print("y 또는 n을 입력해주세요.")
+                print("\ny 또는 n을 입력해주세요.")
                 continue
             break
+        print("\n🧐 새 퀴즈가 추가되었습니다.")
 
         self.quizzes.append(Quiz(question,choices,answer,hint_input))
         self.save_data()
@@ -132,20 +130,24 @@ class QuizGame:
         
         total=len(self.quizzes)
         
-        count=self.get_valid_value(f"몇 문제를 푸시겠습니까?(최대 {total}개):",True,1,total)
+        count=self.get_valid_value(f"\n몇 문제를 푸시겠습니까?(최대 {total}개):",True,1,total)
+        print("="*40)
         
         quiz_list = random.sample(self.quizzes, count)
     
         score=0
         correct=0
-        print('---퀴즈 게임 시작---')
-        for q in quiz_list:
+        print('\n📖퀴즈 게임 시작📖\n')
+        print(f"퀴즈를 시작하겠습니다. 총 {count}문제입니다.")
+        for i,q in enumerate(quiz_list):
+            print("="*40)
+            print(f'\n[문제{i+1}번]')
             q.show_quiz()
             
             use_hint=False
             if q.hint:
                 while True:
-                    choice=input("힌트를 보시겠습니까? (y/n):")
+                    choice=input("👆🏻힌트를 보시겠습니까? 만약 힌트를 보시면 점수는 -5점입니다.(y/n):")
                     if choice.lower()=='y':
                         print(f'힌트: {q.hint}')
                         use_hint=True
@@ -153,7 +155,7 @@ class QuizGame:
                     elif choice.lower()=='n':
                         break
                     else:
-                        print("y 또는 n을 입력해주세요.")
+                        print("❗️y 또는 n을 입력해주세요.")
                 
 
             user_ans=self.get_valid_value('정답을 입력해주세요:',True)
@@ -161,10 +163,10 @@ class QuizGame:
                 
                 if use_hint:
                     gain=5
-                    print(f'정답입니다! +{gain}점')
+                    print(f'✅정답입니다! +{gain}점')
                 else:
                     gain=10
-                    print(f'정답입니다! +{gain}점')
+                    print(f'✅정답입니다! +{gain}점')
     
                 score+=gain
                 correct+=1
@@ -172,11 +174,11 @@ class QuizGame:
                 if use_hint:
                     loss=-5
                     score+=loss
-                    print(f'틀렸습니다. 정답은 {q.answer}번입니다. -5점')
+                    print(f'❌틀렸습니다. 정답은 {q.answer}번입니다. -5점')
                 else:
-                    print(f'틀렸습니다. 정답은 {q.answer}번입니다.')
+                    print(f'❌틀렸습니다. 정답은 {q.answer}번입니다.')
                         
-        print(f'\n게임 종료! {correct}/{len(self.quizzes)}문제 정답, 점수: {score}')
+        print(f'\n게임 종료! {correct}/{len(quiz_list)}문제 정답, 점수: {score}점')
         
         now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         record=GameRecord(now,len(quiz_list),score)
@@ -185,7 +187,9 @@ class QuizGame:
         self.save_history()
         
         if score>self.high_score:
-            print(f'축하합니다! 최고 점수 경신! ({self.high_score} -> {score})')
+            print("┌─────────────────────────────────────────────┐")
+            print(f'│🔥축하합니다! 최고 점수 경신!🔥 ({self.high_score}점 -> {score}점)│')
+            print("└─────────────────────────────────────────────┘")
             self.high_score=score
             self.save_data()
             
@@ -196,11 +200,11 @@ class QuizGame:
             
             print('\n---퀴즈 목록---')
             for i,q in enumerate(self.quizzes):
-                print(f'{i+1}.{q.question}')  
+                print(f'{i+1}. {q.question}')  
             
             
     def show_score(self):
-        print('---최고 점수---')
+        print('\n---최고 점수---')
         
         if self.high_score>0:
             print(f'현재 최고 점수: {self.high_score}점')
@@ -212,7 +216,7 @@ class QuizGame:
             print(f'{i+1}. [{r.date}] {r.total}문제 중 {r.score}점')
             
         best=max(self.history,key=lambda x:x.score)
-        print(f'최고 점수 기록: [{best.date}] {best.total}문제 중 {best.score}점')
+        print(f'✨최고 점수 기록: [{best.date}] {best.total}문제 중 {best.score}점')
         
     def save_history(self):
         data=[r.to_dict() for r in self.history]
@@ -234,8 +238,15 @@ class QuizGame:
             self.history.append(record)
             
     def run(self):
+        count=0
         while True:
-            print("메뉴를 선택해 주세요")
+            if count==0:
+                print("┌─────────────────────────────────────┐")
+                print("│💥Quiz Game에 오신 것을 환영합니다!💥│")
+                print("└─────────────────────────────────────┘")
+                count+=1
+            print("\n메뉴를 선택해 주세요")
+            print("\n---퀴즈 게임 메뉴---\n")
             print("1. 퀴즈 풀기")
             print("2. 퀴즈 추가하기")
             print("3. 퀴즈 목록 보기")
@@ -243,7 +254,7 @@ class QuizGame:
             print("5. 퀴즈 삭제하기")
             print("6. 프로그램 종료")
 
-            user_select=self.get_valid_value('숫자를 입력해 주세요:',True,1,7)
+            user_select=self.get_valid_value('숫자를 입력해 주세요:',True,1,6)
             
             if user_select==1:
                 self.start_quiz()
