@@ -252,4 +252,4 @@ state.json 데이터가 손상됬을 경우에도 프로그램이 비정상적�
 프로그램 종료 후 재 실행시 데이터가 유지됩니다.
 ![restart](img/restart.png)
 
-commit
+git
