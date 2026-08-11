@@ -63,7 +63,7 @@ Quiz/
     ├── restart.png
     ├── score_screen.png
     └── show_score_screen.png
-~~~
+```
 
 
 
