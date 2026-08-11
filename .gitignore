@@ -3,3 +3,6 @@
 .venv/
 .env
 *.log
+state.json
+history.json
+__pycache__/
