@@ -1,47 +1,9 @@
-
-import os
+from GameRecord import GameRecord
+from Quiz import Quiz
 import json
+import os
 import random
-from datetime import datetime
-
-
-class Quiz:
-    def __init__(self,question,choices,answer,hint=''):
-        self.question=question
-        self.choices=choices
-        self.answer=answer
-        self.hint=hint
-        
-    def show_quiz(self):
-        print(f'{self.question}')
-        for i,opt in enumerate(self.choices):
-            print(f'{i+1}.{opt}')
-    
-            
-    def is_correct(self, user_ans):
-        return user_ans == self.answer
-
-
-    def to_dict(self):
-        return {
-            "question": self.question,
-            "choices": self.choices,
-            "answer": self.answer,
-            'hint': self.hint
-        }
-        
-class GameRecord:
-    def __init__(self,date,total,score):
-        self.date=date
-        self.total=total
-        self.score=score
-        
-    def to_dict(self):
-        return {
-            "date": self.date,
-            "total": self.total,
-            "score": self.score
-        }
+import datetime
 
 class QuizGame:
     def __init__(self,file_name='state.json'):
@@ -116,7 +78,7 @@ class QuizGame:
         while True:
             user_input=input(prompt).strip()
             if not user_input:
-                print("입력값이 비었습니다. 다시 입력해주세요")
+                print("입력값이 비었습니다. 다시 입력해주세요: ")
                 continue
                 
                 
@@ -138,7 +100,7 @@ class QuizGame:
         
         print('새 퀴즈를 입력해주세요')
         #질문
-        question=self.get_valid_value('질문을 입력해주세요')
+        question=self.get_valid_value('질문을 입력해주세요:')
         
         #옵션
         choices=[]
@@ -146,9 +108,20 @@ class QuizGame:
             opt=self.get_valid_value(f'{i}번째 보기를 입력해주세요')
             choices.append(opt)
         #정답
-        answer=self.get_valid_value('정답을 입력해주세요 (숫자 1~4)',True)
-        hint=self.get_valid_value('힌트를 입력해주세요(없으면 Enter): ')
-        self.quizzes.append(Quiz(question,choices,answer,hint))
+        answer=self.get_valid_value('정답을 입력해주세요 (숫자 1~4):',True)
+
+        while True:
+            hint=self.get_valid_value('힌트를 입력하시겠습니까?(y/n):')
+            if hint.lower()== 'y':
+                hint_input=self.get_valid_value('힌트를 입력해주세요:') 
+            elif hint.lower()=='n':
+                hint_input=''
+            else:
+                print("y 또는 n을 입력해주세요.")
+                continue
+            break
+
+        self.quizzes.append(Quiz(question,choices,answer,hint_input))
         self.save_data()
     
     def start_quiz(self):
@@ -159,7 +132,7 @@ class QuizGame:
         
         total=len(self.quizzes)
         
-        count=self.get_valid_value(f"몇 문제를 푸시겠습니까?(최대 {total}개)",True,1,total)
+        count=self.get_valid_value(f"몇 문제를 푸시겠습니까?(최대 {total}개):",True,1,total)
         
         quiz_list = random.sample(self.quizzes, count)
     
@@ -171,12 +144,19 @@ class QuizGame:
             
             use_hint=False
             if q.hint:
-                choice=input("힌트를 보시겠습니까? (y/n):")
-                if choice.lower()=='y':
-                    print(f'힌트: {q.hint}')
-                    use_hint=True
-            
-            user_ans=self.get_valid_value('정답을 입력해주세요',True)
+                while True:
+                    choice=input("힌트를 보시겠습니까? (y/n):")
+                    if choice.lower()=='y':
+                        print(f'힌트: {q.hint}')
+                        use_hint=True
+                        break
+                    elif choice.lower()=='n':
+                        break
+                    else:
+                        print("y 또는 n을 입력해주세요.")
+                
+
+            user_ans=self.get_valid_value('정답을 입력해주세요:',True)
             if q.is_correct(user_ans): 
                 
                 if use_hint:
@@ -198,7 +178,7 @@ class QuizGame:
                         
         print(f'\n게임 종료! {correct}/{len(self.quizzes)}문제 정답, 점수: {score}')
         
-        now=datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        now=datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         record=GameRecord(now,len(quiz_list),score)
         
         self.history.append(record)
@@ -288,15 +268,8 @@ class QuizGame:
         for i,q in enumerate(self.quizzes):
             print(f'{i+1}. {q.question}')
         
-        num=self.get_valid_value('삭제할 퀴즈 번호를 입력해주세요',True,1,len(self.quizzes))
+        num=self.get_valid_value('삭제할 퀴즈 번호를 입력해주세요:',True,1,len(self.quizzes))
         removed=self.quizzes.pop(num-1)
         self.save_data()
         print(f'{removed.question} 퀴즈가 삭제되었습니다.')
             
-if __name__ == '__main__':
-    game=QuizGame('state.json')
-    try:
-        game.run()
-    except (KeyboardInterrupt, EOFError):
-        print('\n입력이 중단되었습니다. 저장 후 종료합니다.')
-        game.save_data()
