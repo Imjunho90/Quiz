@@ -252,7 +252,6 @@ state.json 데이터가 손상됬을 경우에도 프로그램이 비정상적�
 프로그램 종료 후 재 실행시 데이터가 유지됩니다.
 ![restart](img/restart.png)
 
-git
 
 ## 9. git log
 
@@ -274,4 +273,3 @@ sub1에서 퀴즈모듈을 만들고 main으로 브랜치 병합을 진행하였
 
 그 후 다른 로컬에서 README.md 수정 후 현재 로컬에서 git pull을 하여 변경사항을 가져왔습니다.
 ![pull](img/git_pull.png)
-ss
