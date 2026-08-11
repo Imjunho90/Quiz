@@ -63,7 +63,8 @@ Quiz/
     ├── restart.png
     ├── score_screen.png
     └── show_score_screen.png
-'''
+~~~
+
 
 
 ## 6. 클래스 구조
