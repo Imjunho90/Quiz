@@ -38,26 +38,8 @@ python codyssey.py
 
 
 
-## 5. 클래스 구조
 
-- Quiz — 개별 퀴즈 한 문제를 표현
-  - 속성: question, choices, answer
-  - 메서드: show_quiz(), is_correct(), to_dict()
-
-- QuizGame — 게임 전체 관리
-  - 속성: quizzes, high_score, filename
-  - 메서드: run(), start_quiz(), add_quiz()
-    show_list(), show_score(),
-    load_data(), save_data() default_data(),
-    save_history(),load_history()
-    get_valid_value(), delete_quiz()
-
-- GameRecord - 게임 기록 시간, 게임 수, 점수 관리
-  - 속성: date, total, score
-  - 메써드: to_dict()
-
-- main - 게임 실행
-## 6. 파일 구조
+## 5. 파일 구조
 
 ```text
 Quiz/
@@ -81,6 +63,64 @@ Quiz/
     ├── restart.png
     ├── score_screen.png
     └── show_score_screen.png
+
+## 6. 클래스 구조
+
+- Quiz — 개별 퀴즈 한 문제를 표현
+  - 속성: question, choices, answer
+  - 메서드: show_quiz(), is_correct(), to_dict()
+
+- QuizGame — 게임 전체 관리
+  - 속성: quizzes, high_score, filename
+  - 메서드: run(), start_quiz(), add_quiz()
+    show_list(), show_score(),
+    load_data(), save_data() default_data(),
+    save_history(),load_history()
+    get_valid_value(), delete_quiz()
+
+- GameRecord - 게임 기록 시간, 게임 수, 점수 관리
+  - 속성: date, total, score
+  - 메써드: to_dict()
+
+- main - 게임 실행
+
+### Quiz.py
+
+| method | function |
+|---|---|
+| show_quiz()| 퀴즈 목록 출력|
+|is_correct()| 플레이어의 답변이 정답인지 확인|
+|to_dict()|속성들을 json 형식으로 변환|
+
+### QuizGame.py
+
+|method|function|
+|---|---|
+|run()|퀴즈 프로그램 시작시 보이는 메뉴|
+|start_quiz()|플레이어가 퀴즈를 푸는 모듈|
+|add_quiz()|플레이어가 퀴즈를 추가하는 모듈|
+|show_list()|프로그램에 로드된 퀴즈 목록 출력|
+|show_score()|프로그램에 로드된 최고 점수 출력|
+|load_data()|프로그램 시작시 데이터 로드|
+|save_data()|프로그램에서 사용되는 데이터 저장|
+|default_data()|기본 데이터 로드, 프로그램에서 사용될 데이터가 없거나 손상시에 대체|
+|save_history()|플레이어가 플레이한 퀴즈 플레이 히스토리 저장|
+|load_history()|플레이어가 플레이한 퀴즈 플레이 히스토리 로드|
+|get_valid_value()|플레이어가 프로그램내에서 입력할 시에 데이터 타입과 범위를 검증|
+|delete_quiz()|프로그램에 로드된 퀴즈 목록을 삭제|
+
+### GameRecord.py
+
+|method|function|
+|---|---|
+|to_dict()|속성들을 json 형식으로 변환|
+
+
+
+
+
+
+
 
 ## 7. 데이터 파일 설명 (`state.json`)
 
@@ -124,6 +164,8 @@ Quiz/
 
 파일이 없으면 기본 퀴즈 5문제를 생성하고, JSON 형식이 깨졌거나
 퀴즈 목록이 비어 있으면 안내 메시지 출력 후 기본 데이터로 초기화합니다.
+
+
 
 
 ## 8. 프로그램 실행 화면
