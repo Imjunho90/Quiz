@@ -125,18 +125,25 @@ Quiz/
 
 
 
-## 7. 데이터 파일 설명 (`state.json`)
+## 7. 데이터 파일 설명
 
+### 7-1 state.json
 프로젝트 루트에 UTF-8 인코딩으로 저장됩니다.
 
 ```json
 {
-    "high_score": 50,
+    "high_score": 0,
     "quizzes": [
         {
             "question": "파이썬에서 리스트에 요소를 추가하는 함수는?",
-            "choices": ["add()", "append()", "insert()", "push()"],
-            "answer": 2
+            "choices": [
+                "add()",
+                "append()",
+                "insert()",
+                "push()"
+            ],
+            "answer": 2,
+            "hint": "리스트의 끝에 요소를 추가할 때 사용합니다."
         }
     ]
 }
@@ -150,9 +157,26 @@ Quiz/
 | `quizzes[].question` | str | 문제 |
 | `quizzes[].choices` | list[str] | 보기 4개 |
 | `quizzes[].answer` | int | 정답 번호 (1~4) |
+| `quizzes[].hint` | str | 힌트 |
 
 
+### 7-2 history.json
 
+```json
+[
+  {
+    "date": "2026-08-11 17:52:06",
+    "total": 3,
+    "score": 30
+  }
+]
+```
+
+| 키 | 타입 | 설명 |
+|---|---|---|
+| `date` | string | 퀴즈를 실행한 날짜와 시간 |
+| `total` | int | 전체 문제 수 |
+| `score` | int | 획득 점수 |
 
 저장 시점
 
@@ -168,53 +192,62 @@ Quiz/
 파일이 없으면 기본 퀴즈 5문제를 생성하고, JSON 형식이 깨졌거나
 퀴즈 목록이 비어 있으면 안내 메시지 출력 후 기본 데이터로 초기화합니다.
 
+### 7-1 history.json
 
+| 키 | 타입 | 설명 |
+|---|---|---|
+| `high_score` | int | 최고 점수 (정답 1개당 10점) |
+| `quizzes` | list | 퀴즈 객체 목록 |
+| `quizzes[].question` | str | 문제 |
+| `quizzes[].choices` | list[str] | 보기 4개 |
+| `quizzes[].answer` | int | 정답 번호 (1~4) |
 
 
 ## 8. 프로그램 실행 화면
 
-### menu
+### 8-1 menu
 프로그램 실행시 state.json가 없으면 dafault data를 불러와 게임을 시작합니다.
 ![menu_screen](img/menu.png)
 
-### quiz
+### 8-2 quiz
 퀴즈 풀기 메뉴(1)을 누르면 몇 문제를 풀지 입력하는 칸이 나오고 만약 문제에 힌트가 있다면 힌트를 볼지 안볼지 y or n중에 선택하면됩니다.
 만약 퀴즈 힌트를 본다면 기본점수에서 -5를한 점수를 받고 힌트를 보고도 틀린다면 -5점 감점을 당합니다.
 ![quiz_screen](img/quiz.png)
 
 문제를 다 풀면 본인의 점수가 나오고 만약 본인의 점수가 최고 기록을 세웠다면 이 게임에서의 최고기록이 갱신이 됩니다.
-![score_screen](img/score.png)
+![score_screen](img/score_screen.png)
 
-### add
+### 8-3 add
 퀴즈 추가 메뉴(2)를 누르면 질문, 보기(1~4), 정답, 힌트를 입력할 수 있고 
 만약 힌트를 추가하기 싫다면 n을 누르면 되고 원한다면 y를 누르고 힌트를 입력해 주면됩니다.
 y,Y,N,n 이외의 모든 문자를 입력하게 된다면 다시 입력하라는 상태창이 뜹니다.
 추가된 퀴즈는 state.json에 업데이트 됩니다.
 ![add_screen](img/add.png)
 
-### list
+### 8-4 list
 최고 점수 보기 메뉴(3)를 누르면 현재 로드된 모든 퀴즈 데이터들의 목록이 나옵니다.
 ![list_screen](img/list.png)
 
-### show_score
+### 8-5 show_score
 최고 점수 보기 메뉴(4)를 누르면 현재 최고 점수와 플레이를 했던 시간, 문제수, 점수가 순서대로 출력이 되고 
 이중 최고 점수 기록이 표시됩니다.
-![show_score_screen](img/show_score.png)
+![show_score_screen](img/show_score_screen.png)
 
-### delete_quiz
+### 8-6 delete_quiz
 퀴즈 삭제 메뉴(5)를 누르면 현재 로드된 모든 퀴즈 데이터 목록이 나오고
 이 문제들 중에 삭제하고싶은 번호를 입력합니다.
 ![delete_quiz_screen](img/delete_quiz.png)
 
-### quit
+### 8-7 quit
 프로그램 종료(6)을 누르면 프로그램이 종료됩니다.
 ![quit_screen](img/quit.png)
 
-### except
+### 8-8 except
 아래 케이스들의 입력의 경우 경고 후 재입력하는 흐름으로 돌아갑니다.
 1. 숫자가 아닌 문자 입력
 2. 빈 입력값
 3. 범위 밖의 숫자 입력
+
 ![except](img/except.png)
 
 프로그램 실행 중 Ctrl+C 입력이 발생했을 경우 비정상 종료가 아닌 안내 메시지를 출력하고
