@@ -6,7 +6,7 @@ class Quiz:
         self.hint=hint
         
     def show_quiz(self):
-        print(f'{self.question}\n')
+        print(f'{self.question}\n\n')
         for i,opt in enumerate(self.choices):
             print(f'{i+1}.{opt}')
     
