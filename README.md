@@ -259,6 +259,7 @@ git
 ![git_log1](img/merge.png)
 ![git_log2](img/git_log.png)
 
+sub1에서 퀴즈모듈을 만들고 main으로 브랜치 병합을 진행하였습니다.
 
 
 ## 10. 개발 환경
