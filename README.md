@@ -263,7 +263,7 @@ Quiz 클래스가 아닌 보너스 문제 5개를 만들고 main으로 병합하
 
 ## 10. 개발 환경
 
-![개발 환경](img/development_environment.png)
+![개발 환경](img/development_env.png)
 
 
 ## 11. clone과 pull 실습
